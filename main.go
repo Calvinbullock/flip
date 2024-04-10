@@ -1,17 +1,29 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"os"
+    "fmt"
+    "log"
+    "os"
 )
 
 func main() {
+
+    newFileName := getFileName("Old file: ")
+    oldFileName := getFileName("New file: ")
+    
+    newFileData := readFile(newFileName)
+    oldFileData := readFile(oldFileName)
+
+    fmt.Printf(string(newFileData))
+    fmt.Printf(string(oldFileData))
+}
+
+func getFileName(msg string) string {
     var fileName string
-    fmt.Printf("File Name: ")
+    fmt.Printf(msg)
     fmt.Scan(&fileName)
 
-    fileData := readFile(fileName)
+    return fileName
 }
 
 func readFile(fileName string) []byte {
