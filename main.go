@@ -11,41 +11,46 @@ import (
 ||		Storage struc		    ||
 \\ ======================================== */
 
-type commit struct {
+type Commit struct {
     fileName string
-    fileData []byte
+    fileData string
+    commitMsg string
 }
 
 /* ======================================== \\
 ||		main code		    ||
 \\ ======================================== */
 func main() {
+    commit := makeCommit()
+    fmt.Println(commit)
+}
+
+func makeCommit() Commit {
     var newFileName string
-    var oldFileName string
+    var newCommitMsg string
     
-    // Command line args 
-    if len(os.Args) < 1 {
-	newFileName = getFileName("Old file: ")
-	oldFileName = getFileName("New file: ")
+    // get command line args 
+    if len(os.Args) < 2 {
+	newFileName = getStringInput("Old file: ")
+	newCommitMsg = getStringInput("commit msg: ")
     } else {
 	newFileName = os.Args[1]
-	oldFileName = getFileName("New file: ")
+	newCommitMsg = os.Args[2]
     }
     
     newFileData := readFile(newFileName)
-    oldFileData := readFile(oldFileName)
-
-    fmt.Printf(string(newFileData))
-    fmt.Printf(string(oldFileData))
+    commit := Commit {fileName: newFileName, fileData: string(newFileData), commitMsg: newCommitMsg }
+    
+    return commit
 }
 
 // takes in a msg to prompt for input, returns a fileName as a string. 
-func getFileName(msg string) string {
-    var fileName string
+func getStringInput(msg string) string {
+    var input string
     fmt.Printf(msg)
-    fmt.Scan(&fileName)
+    fmt.Scan(&input )
 
-    return fileName
+    return input
 }
 
 // takes a file name and returns the file data as byte slice.
