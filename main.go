@@ -17,21 +17,13 @@ type Commit struct {
     commitMsg string
 }
 
-/* ======================================== \\
-||		main code		    ||
-\\ ======================================== */
-func main() {
-    commit := makeCommit()
-    fmt.Println(commit)
-}
-
 func makeCommit() Commit {
     var newFileName string
     var newCommitMsg string
     
     // get command line args 
     if len(os.Args) < 2 {
-	newFileName = getStringInput("Old file: ")
+	newFileName = getStringInput("File name: ")
 	newCommitMsg = getStringInput("commit msg: ")
     } else {
 	newFileName = os.Args[1]
@@ -42,6 +34,15 @@ func makeCommit() Commit {
     commit := Commit {fileName: newFileName, fileData: string(newFileData), commitMsg: newCommitMsg }
     
     return commit
+}
+
+
+/* ======================================== \\
+||		main code		    ||
+\\ ======================================== */
+func main() {
+    commit := makeCommit()
+    fmt.Println(commit)
 }
 
 // takes in a msg to prompt for input, returns a fileName as a string. 
