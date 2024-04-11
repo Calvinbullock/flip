@@ -6,6 +6,19 @@ import (
     "os"
 )
 
+
+/* ======================================== \\
+||		Storage struc		    ||
+\\ ======================================== */
+
+type commit struct {
+    fileName string
+    fileData []byte
+}
+
+/* ======================================== \\
+||		main code		    ||
+\\ ======================================== */
 func main() {
     var newFileName string
     var oldFileName string
