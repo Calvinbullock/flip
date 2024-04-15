@@ -37,13 +37,58 @@ func makeCommit() Commit {
     return commit
 }
 
+// NOTE ?????
+func compareCommitData(newCommit Commit, oldCommit Commit) {
+    newLines := strings.Split(newCommit.fileData, "/n")
+    oldLines := strings.Split(oldCommit.fileData, "/n")
+
+    for _, line := range newLines {
+	fmt.Print("L:", line)
+    }
+
+    for _, line := range oldLines {
+	fmt.Print("L:", line)
+    }
+}
+
+func testCompareCommitData() bool {
+    commit1 := Commit {fileName: "test", fileData: string(readFile("test")), commitMsg: "commit 1"}
+    commit2 := Commit {fileName: "test2", fileData: string(readFile("test2")), commitMsg: "commit 2"}
+
+    compareCommitData(commit1, commit2)
+
+    return true
+}
 
 /* ======================================== \\
 ||		main code		    ||
 \\ ======================================== */
+
+// runs all test functions
+func testRunner() bool {
+    if testCompareCommitData() == false {
+	return false
+    }
+
+    fmt.Println()
+    return true
+}
+
 func main() {
-    commit := makeCommit()
-    fmt.Println(commit)
+
+    if testRunner() == false {
+	return
+    }
+
+    commitList := []Commit {}
+    
+    for true {
+	commit := makeCommit()
+	commitList = append(commitList, commit)   
+
+	fmt.Println(commit.fileName, commit.commitMsg) 
+	fmt.Println()
+    }
 }
 
 // takes in a msg to prompt for input, returns a fileName as a string. 
