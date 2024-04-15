@@ -4,8 +4,8 @@ import (
     "fmt"
     "log"
     "os"
+    "strings"
 )
-
 
 /* ======================================== \\
 ||		Storage struc		    ||
@@ -17,6 +17,7 @@ type Commit struct {
     commitMsg string
 }
 
+// takes user input and parses it into a commit instance 
 func makeCommit() Commit {
     var newFileName string
     var newCommitMsg string
