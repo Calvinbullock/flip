@@ -1,10 +1,10 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "os"
-    "strings"
+	"fmt"
+	"log"
+	"os"
+	"strings"
 )
 
 /* ======================================== \\
@@ -37,25 +37,40 @@ func makeCommit() Commit {
     return commit
 }
 
-// NOTE ?????
-func compareCommitData(newCommit Commit, oldCommit Commit) {
-    newLines := strings.Split(newCommit.fileData, "/n")
-    oldLines := strings.Split(oldCommit.fileData, "/n")
+// compares two commits of the same file and checks for difference
+func areCommitsDiffernet(newCommit Commit, oldCommit Commit) bool {
 
-    for _, line := range newLines {
-	fmt.Print("L:", line)
+    if newCommit.fileName != oldCommit.fileName {
+	return false
+    }
+    newLines := strings.Split(newCommit.fileData, "\n")
+    oldLines := strings.Split(oldCommit.fileData, "\n")
+
+    for  i, lines := range newLines  {
+	if i < len(oldLines) {
+	    if lines == oldLines[i] {
+		return false
+	    }
+	}
     }
 
-    for _, line := range oldLines {
-	fmt.Print("L:", line)
-    }
+    return true
 }
 
-func testCompareCommitData() bool {
+func testAreCommitsDiffernet() bool {
     commit1 := Commit {fileName: "test", fileData: string(readFile("test")), commitMsg: "commit 1"}
     commit2 := Commit {fileName: "test2", fileData: string(readFile("test2")), commitMsg: "commit 2"}
+    commit3 := Commit {fileName: "test", fileData: string(readFile("test")), commitMsg: "commit 1"}
 
-    compareCommitData(commit1, commit2)
+    // check that different files are commited they will not compare (should be true)
+    if areCommitsDiffernet(commit1, commit2) == true {
+	return false
+    }
+
+    // check that if file data is identicle it is recognized as identicle (should be false)
+    if areCommitsDiffernet(commit3, commit2) != false {
+	return false
+    }
 
     return true
 }
@@ -66,7 +81,7 @@ func testCompareCommitData() bool {
 
 // runs all test functions
 func testRunner() bool {
-    if testCompareCommitData() == false {
+    if testAreCommitsDiffernet() == false {
 	return false
     }
 
